@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Control Offline</string>
+    <string name="control_ingresos">CONTROLANDO INGRESOS</string>
+    <string name="control_salidas">CONTROLANDO SALIDA</string>
+    <string name="control_vehiculos">CONTROLANDO VEHICULOS</string>
+    <string name="control_entrada_visitas">CONTROLANDO ENTRADA VISITAS</string>
+    <string name="control_salida_visitas">CONTROLANDO SALIDA VISITAS</string>
+    <string name="control_tecnica_ent">CONTROLANDO ENTRADA VISITA TÉCNICA</string>
+    <string name="control_tecnica_sal">CONTROLANDO SALIDA VISITA TÉCNICA</string>
+    <string name="control_grupal_ent">CONTROLANDO ENTRADA VISITA GRUPAL</string>
+    <string name="control_grupal_sal">CONTROLANDO SALIDA VISITA GRUPAL</string>
+    <string name="control_fletes_ent">CONTROLANDO ENTRADA EMPRESAS DE FLETES</string>
+    <string name="control_fletes_sal">CONTROLANDO SALIDA EMPRESAS DE FLETES</string>
+    <string name="control_emergencia">CONTROLANDO EMERGENCIA</string>
+    <string name="control_licencia">CONTROLANDO LICENCIAS</string>
+    <string name="texto_escaner_vehiculo">Digitar Patente</string>
+    <string name="texto_escaner_persona">Escanear o digitar rut</string>
+    <string name="control_ing_vec">Controlando entrada vehículos</string>
+    <string name="control_sal_vec">Controlando salida vehículos</string>
+    <string name="vehiculo">Vehículo</string>
+    <string name="conductor">Conductor</string>
+    <string name="pasajeros">Pasajeros</string>
+    <string name="ingresar_patente">Ingresar Patente</string>
+    <string name="sin_espacios">sin espacios ni guión</string>
+    <string name="escribir_rut">Escribir RUT</string>
+    <string name="digitar_patente">digitar patente</string>
+    <string name="digitar_rut">Escanear o digitar rut</string>
+    <string name="control_vehicular">Control Vehicular</string>
+    <string name="control_licencias">Control Licencia</string>
+</resources>

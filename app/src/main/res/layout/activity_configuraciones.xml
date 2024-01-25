@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"    xmlns:tools="http://schemas.android.com/tools"    android:layout_width="match_parent"    android:layout_height="match_parent"    tools:context=".Configuraciones" android:background="@drawable/fondofainal">
+
+
+    <!--PantallaDinamica-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="172dp"
+        tools:layout_editor_absoluteY="-91dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="CONFIGURACIONES"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="App ID"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblAppId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="- app id -"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice configuraciones"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtWsConfiguraciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://albemarle.acreditacionsercol.cl/webservice/configwebservice.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray"
+                tools:ignore="TextContrastCheck" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/nalfastrap_button_radius_border"
+                android:onClick="onclickCargarWebservice"
+                android:text="CARGAR WEBSERVICE"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/azulBotonIngresos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Logo"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Url imagen logo (750x253px≈):"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtUrlLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/logo.bmp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:outlineAmbientShadowColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginLeft="24dp"
+                            android:background="@drawable/nalfastrap_button_radius_border"
+                            android:onClick="onclickCargarImagen"
+                            android:text="CARGAR IMAGEN"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/azulBotonIngresos" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="-19dp"
+                        android:layout_marginLeft="-19dp"
+                        android:layout_weight="1.3"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginRight="24dp"
+                            android:background="@drawable/nalfastrap_button_radius_border"
+                            android:onClick="onclickBorrarImagen"
+                            android:text="BORRAR"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/rojoBotonSalidas" />
+                    </LinearLayout>
+                </LinearLayout>
+            </TableLayout>
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="360dp"
+                android:layout_height="121dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice InternoExterno:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsInternoExterno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsInternoExterno.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Visitas:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsVisitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsVisitas.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Visita Técnica:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsTecnica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsTecnica.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Pase Grupal:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsGrupal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsGrupal.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Transportista:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsTransportista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsTransportista.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Emergencia:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsEmergencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsEmergencia.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Licencias:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsLicencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/wsLicencias.php"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Marcas de Vehiculos:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsMarcasVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/listadosVarios"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Tipo Vehiculos:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsTipoVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/listadosVarios"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Tipo de Licencia:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsTipoLicencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/listadosVarios"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Webservice Vehiculos:"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/txtWsVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: https://www.dominio.cl/listadosVarios"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Tiempo actualización automática (milisegundos):"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtTiempo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:ems="10"
+                android:hint="Ej.: 60000"
+                android:text="3600000"
+                android:textColor="@color/black"
+                android:textColorHint="@color/softgray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Capturador"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarCamara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar cámara:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Botones"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnIngresos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Ingresos:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnSalidas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Salidas:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnVehiculos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Vehiculos:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnEspeciales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Especiales:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnVisitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Visitas:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnTecnica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Visita Técnica:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnGrupal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Visita Grupal:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnTransportista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Transportista:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnEmergencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Emergencia:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sHabilitarBtnLicencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="Habilitar botón Licencias:"
+                android:textColor="@color/black"
+                android:textOff="No"
+                android:textOn="Sí" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/nalfastrap_button_radius_border"
+                android:onClick="onclickGuardarConfiguracion"
+                android:text="GUARDAR"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/azulControlandoIngresos" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="44dp"
+                android:background="@drawable/nalfastrap_button_radius_border"
+                android:onClick="onclickVolver"
+                android:text="volver"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/softgray" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

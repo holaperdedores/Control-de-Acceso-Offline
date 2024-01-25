@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/contraintLayout1" xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/green_success_button" xmlns:app="http://schemas.android.com/apk/res-auto"    xmlns:tools="http://schemas.android.com/tools"    android:layout_width="match_parent"    android:layout_height="match_parent"    tools:context=".Alerta">
+
+    <!--SuccessIcon--><ImageView
+    android:id="@+id/imgSuccessIcon"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginBottom="32dp"
+    app:layout_constraintBottom_toTopOf="@+id/lblMensaje"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:background="@drawable/success_icon"
+    android:visibility="invisible"/>
+    <!--WarningIcon--><ImageView
+    android:id="@+id/imgWarningIcon"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginBottom="32dp"
+    app:layout_constraintBottom_toTopOf="@+id/lblMensaje"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:background="@drawable/warning_icon"
+    android:visibility="invisible"/>
+    <!--DangerIcon--><ImageView
+    android:id="@+id/imgDangerIcon"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginBottom="32dp"
+    app:layout_constraintBottom_toTopOf="@+id/lblMensaje"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:background="@drawable/danger_icon"
+    android:visibility="invisible"/>
+    <!--Mensaje--><TextView
+    android:id="@+id/lblMensaje"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginLeft="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginRight="24dp"
+    android:gravity="center_horizontal"
+    android:text="Mensaje"
+    android:textColor="@color/white"
+    android:textSize="28sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+    <!--Volver--><Button
+    android:id="@+id/button5"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="24dp"
+    android:layout_marginLeft="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginRight="24dp"
+    android:layout_marginBottom="16dp"
+    android:onClick="onclickVolver"
+    android:text="Volver"
+    android:backgroundTint="@color/softgray"
+    android:textColor="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
