@@ -3,7 +3,6 @@ package com.example.cio;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
@@ -18,24 +17,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.cio.WorkManager.CargaAsincrona;
 import com.example.cio.utilidades.DataConverter;
+import com.example.cio.utilidades.LogUtils;
 import com.example.cio.utilidades.Utilidades;
 
 import java.util.concurrent.TimeUnit;
@@ -50,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public static ProgressBar progressDialogo;
 
     public static Button buttonDialogo;
+
+    public static TextView fechaCarga;
     ImageView imgLogo;
     ImageView imgLogo2;
     TextView lblFecha;
@@ -131,13 +129,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 1);
+        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 3);
         dialogo = findViewById(R.id.fondoOscuro);
         tituloDialogo = findViewById(R.id.tituloDialog);
         textoDialogo = findViewById(R.id.textoDialog);
         progressDialogo = findViewById(R.id.progressDialgo);
         buttonDialogo = findViewById(R.id.butonDialog);
         version = findViewById(R.id.version);
+        fechaCarga = findViewById(R.id.lblInfoCarga);
         imgLogo = findViewById(R.id.imgLogo);
         imgLogo2 = findViewById(R.id.imgLogo2);
         lblFecha = findViewById(R.id.lblFecha);
@@ -306,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 200);
-        Log.i(TAG,"El tiempo programado es "+CFGtiempo);
+        LogUtils.LOGI(TAG,"El tiempo programado es "+CFGtiempo);
         if(CFGtiempo != null){
             PeriodicWorkRequest periodicSyncDataWork =
                     new PeriodicWorkRequest.Builder(
@@ -357,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     public void onclickBtnIngresos(View view) {
         tipoPase="ingresos"+tipoPase;
         if(esVehiculo){
-            Log.i(TAG,"la variable vehiculo es "+esVehiculo);
+            LogUtils.LOGI(TAG,"la variable vehiculo es "+esVehiculo);
             try {
                 mP.stop();
             }catch (Exception e){ }
@@ -379,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
             btnPanelCentral.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(MainActivity.this, Control.class);
             intent.putExtra("destino",tipoPase);
+            intent.putExtra("carga",fechaCarga.getText());
             tipoPase = "";
             startActivity(intent);
         }else{
@@ -395,6 +395,7 @@ public class MainActivity extends AppCompatActivity {
             mP.start();
             Intent intent = new Intent(MainActivity.this, Control.class);
             intent.putExtra("destino",tipoPase);
+            intent.putExtra("carga",fechaCarga.getText());
             tipoPase = tipoPase.replace("ingresos","");
             startActivity(intent);
         }
@@ -575,7 +576,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onclickPanelCentral(View view) {
         tipoPase="";
-        Log.i(TAG,"El tipo de comtrol es "+tipoPase);
+        LogUtils.LOGI(TAG,"El tipo de comtrol es "+tipoPase);
         if(CFGhabilitar_btnIngresos.equals("1")){
             btnIngresos.setVisibility(View.VISIBLE);
         } else {

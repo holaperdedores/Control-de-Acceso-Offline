@@ -36,10 +36,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.cio.WorkManager.CargaAsincrona;
 import com.example.cio.utilidades.DataConverter;
+import com.example.cio.utilidades.LogUtils;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,6 +63,8 @@ public class Control extends AppCompatActivity {
     public static ProgressBar progressDialogo;
 
     public static Button buttonDialogo;
+
+    public static TextView fechaCarga;
 
     ImageView imgLogo;
     ImageView imgVehiculo, imgConductor,imgPasajeros;
@@ -86,6 +91,8 @@ public class Control extends AppCompatActivity {
     Vibrator vibrator;
 
     String tipoControl;
+
+    String fechaCargatxt = "";
     Long idGrupal,idGrupalRechaza;
     Boolean hayResultadoChofer = false;
     String tipoVehiculo;
@@ -125,14 +132,14 @@ public class Control extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control);
-        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 1);
+        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 3);
 
         dialogo = findViewById(R.id.fondoOscuro);
         tituloDialogo = findViewById(R.id.tituloDialog);
         textoDialogo = findViewById(R.id.textoDialog);
         progressDialogo = findViewById(R.id.progressDialgo);
         buttonDialogo = findViewById(R.id.butonDialog);
-
+        fechaCarga = findViewById(R.id.lblInfoCarga);
         imgLogo = findViewById(R.id.imgLogo);
         imgVehiculo = findViewById(R.id.ImagenVehiculo);
         imgConductor = findViewById(R.id.ImagenChofer);
@@ -192,6 +199,8 @@ public class Control extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null){
             tipoControl = bundle.getString("destino");
+            fechaCargatxt = bundle.getString("carga");
+            fechaCarga.setText(fechaCargatxt);
             formatoTipoControl();
         }
 
@@ -361,7 +370,7 @@ public class Control extends AppCompatActivity {
         btnCerrar.setVisibility(View.GONE);
         btnTeclado2.setVisibility(View.GONE);
         btnCamara2.setVisibility(View.GONE);
-        Log.i(TAG,"El tipo de comtrol es "+tipoControl);
+        LogUtils.LOGI(TAG,"El tipo de comtrol es "+tipoControl);
         switch(tipoControl){
             case "salidasVehicular":
                 lblTitulo.setText(R.string.control_sal_vec);
@@ -788,6 +797,27 @@ public class Control extends AppCompatActivity {
         }
     }
     public void onclickPanelCentral(View view) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date fecha1,fecha2;
+        try{
+            String[] tes1 = fechaCargatxt.split(":");
+            String[] tes2 = fechaCarga.getText().toString().split(":");
+            if(tes1.length>2 && tes2.length>2){
+                fecha1 = sdf.parse(tes1[1].trim()+":"+tes1[2]);
+                fecha2 = sdf.parse(tes2[1].trim()+":"+tes2[2]);
+                assert fecha1 != null;
+                if(fecha1.equals(fecha2)){
+                    LogUtils.LOGI(TAG, "Fecha 1 es igual a fecha2" );
+                }else if(fecha1.after(fecha2)){
+                    LogUtils.LOGI(TAG, "Fecha 1 es mayor a fecha2" );
+                }else if(fecha1.before(fecha2)){
+                    LogUtils.LOGI(TAG, "Fecha 1 es menor a fecha2" );
+                    MainActivity.fechaCarga.setText("Ultima Carga : "+fecha2.toString());
+                }
+            }
+        }catch (Exception e){
+            Log.e(TAG, Objects.requireNonNull(e.getMessage()));
+        }
         finish();
     }
     public void onclickCerrar(View view) {
@@ -1202,7 +1232,6 @@ public class Control extends AppCompatActivity {
         String soloRut = rut;
 
         //filtrar qr cédula de identidad nueva chilena
-        Log.i(TAG,"el resultado de index.of "+rut.toLowerCase().indexOf("https://portal.sidiv"));
         if (rut.toLowerCase().indexOf("https://portal.sidiv") == 0) soloRut = rut.substring(52, 62);
         //5555555566666666667
         //2345678901234567890
@@ -1214,7 +1243,6 @@ public class Control extends AppCompatActivity {
         return soloRut;
     }
     private void procesarRut(String rut) {
-        Log.i(TAG,"el rut es "+rut);
         try {
             try {
                 mP.stop();
@@ -1324,11 +1352,9 @@ public class Control extends AppCompatActivity {
                     mP.start();
                     break;
                 case "ingresos":
-                    campos = new String[]{"NOMBRE", "APELLIDO", "CARGO", "EMPRESA", "ID_PERSONA"};
+                    campos = new String[]{"NOMBRE", "APELLIDO", "CARGO", "EMPRESA", "ID_PERSONA","FECHA_CARGA"};
                     parametros = new String[]{rut.toLowerCase(),"2"};
-                    Log.i(TAG, Arrays.toString(parametros));
                     cursor = db.query("personal", campos, "LOWER(RUT) = ? AND ESTADO = ? AND TERMINO_CONTRATO >= CURRENT_DATE", parametros, null, null, null);
-                    Log.i(TAG,cursor.toString());
                     if (cursor.getCount() > 0) {
                         cursor.moveToFirst();
                         //validar que no se repitan los ingresos de la misma persona
@@ -1348,7 +1374,7 @@ public class Control extends AppCompatActivity {
                             lblResultado.setTextColor(getResources().getColor(R.color.green_success));
                             lblNombre.setText(cursor.getString(0) + " " + cursor.getString(1));
                             lblCargo.setText(cursor.getString(3));
-                            registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("1", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null));
+                            registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("1", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null),ifN(cursor.getString(5), null));
                             mP = MediaPlayer.create(getApplicationContext(), R.raw.accesopermitido);
                         }
                     } else {
@@ -1370,7 +1396,7 @@ public class Control extends AppCompatActivity {
                     mP.start();
                     break;
                 case "salidas":
-                    campos = new String[]{"NOMBRE", "APELLIDO", "CARGO", "EMPRESA", "ID_PERSONA"};
+                    campos = new String[]{"NOMBRE", "APELLIDO", "CARGO", "EMPRESA", "ID_PERSONA", "FECHA_CARGA"};
                     parametros = new String[]{rut.toLowerCase(),"2"};
                     cursor = db.query("personal", campos, "LOWER(RUT) = ? AND ESTADO = ?", parametros, null, null, null);
                     if (cursor.getCount() > 0) {
@@ -1392,7 +1418,7 @@ public class Control extends AppCompatActivity {
                             lblResultado.setTextColor(getResources().getColor(R.color.green_success));
                             lblNombre.setText(cursor.getString(0) + " " + cursor.getString(1));
                             lblCargo.setText(cursor.getString(3));
-                            registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("2", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null));
+                            registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("2", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null), cursor.getString(5));
                             mP = MediaPlayer.create(getApplicationContext(), R.raw.seharegistradosalida);
                         }
                     } else {
@@ -1737,10 +1763,11 @@ public class Control extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-    private void registrarCapturaPersonal(String RUT, String ID_PERSONA, String NOMBRE, String APELLIDO, String CARGO, String EMPRESA, String TIPO_CAPTURA, String NOMBRE_DISPOSITIVO, String FECHA_CAPTURA) {
+    private void registrarCapturaPersonal(String RUT, String ID_PERSONA, String NOMBRE, String APELLIDO, String CARGO, String EMPRESA, String TIPO_CAPTURA, String NOMBRE_DISPOSITIVO, String FECHA_CAPTURA, String FECHA_CARGA) {
         SQLiteDatabase db = conn.getWritableDatabase();
+        LogUtils.LOGI(TAG, "la fcha de carga es "+FECHA_CARGA);
         db.execSQL(
-            "INSERT INTO personalCapturado(RUT, ID_PERSONA, NOMBRE, APELLIDO, CARGO, EMPRESA, TIPO_CAPTURA, NOMBRE_DISPOSITIVO, FECHA_CAPTURA) " +
+            "INSERT INTO personalCapturado(RUT, ID_PERSONA, NOMBRE, APELLIDO, CARGO, EMPRESA, TIPO_CAPTURA, NOMBRE_DISPOSITIVO, FECHA_CAPTURA, FECHA_CARGA) " +
                     " VALUES(" + ifN(RUT, "NULL", VRCHR) +
                     ", " + ifN(ID_PERSONA,"NULL", VRCHR) +
                     ", " + ifN(NOMBRE,"NULL", VRCHR) +
@@ -1749,7 +1776,9 @@ public class Control extends AppCompatActivity {
                     ", " + ifN(EMPRESA,"NULL", VRCHR) +
                     ", " + ifN(TIPO_CAPTURA,"NULL", VRCHR) +
                     ", " + ifN(NOMBRE_DISPOSITIVO,"NULL", VRCHR) +
-                    ", " + ifN(FECHA_CAPTURA,"NULL", VRCHR) + ")"
+                    ", " + ifN(FECHA_CAPTURA,"NULL", VRCHR) +
+                    ", " + ifN(FECHA_CARGA,"NULL", VRCHR) +
+                    ")"
         );
         db.close();
     }

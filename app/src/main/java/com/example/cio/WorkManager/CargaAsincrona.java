@@ -22,7 +22,7 @@ public class CargaAsincrona extends Worker {
     public Result doWork() {
         Context applicationContext = getApplicationContext();
         ConexionSQLiteHelper conn;
-        conn = new ConexionSQLiteHelper(getApplicationContext(), "DB_CIO", null, 1);
+        conn = new ConexionSQLiteHelper(getApplicationContext(), "DB_CIO", null, 3);
         String tipo = getInputData().getString("tipo");
         assert tipo != null;
         new CargarDescarga(conn,applicationContext,Integer.parseInt(tipo));

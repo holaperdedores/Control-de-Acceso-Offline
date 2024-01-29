@@ -51,7 +51,8 @@ public class Utilidades {
                                                                             "CONTRATO INTEGER, " +
                                                                             "INICIO_CONTRATO TEXT, " +
                                                                             "TERMINO_CONTRATO TEXT, " +
-                                                                            "ID_EMPRESA INTEGER" +
+                                                                            "ID_EMPRESA INTEGER, " +
+                                                                            "FECHA_CARGA TEXT"+
                                                                             ")";
     public static final String CREAR_TABLA_PERSONAL_CAPTURADO = "CREATE TABLE personalCapturado(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                                                 "ID_PERSONA INTEGER, " +
@@ -62,7 +63,9 @@ public class Utilidades {
                                                                                                 "EMPRESA TEXT, " +
                                                                                                 "TIPO_CAPTURA TEXT, " +
                                                                                                 "NOMBRE_DISPOSITIVO TEXT, " +
-                                                                                                "FECHA_CAPTURA TEXT)";
+                                                                                                "FECHA_CAPTURA TEXT, " +
+                                                                                                "FECHA_CARGA TEXT"+
+                                                                                                ")";
     public static final String CREAR_TABLA_PERSONAL_RECHAZADO = "CREATE TABLE personalRechazado(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "RUT TEXT, " +
             "NOMBRE TEXT, " +
@@ -129,12 +132,6 @@ public class Utilidades {
             "FECHA_CAPTURA TEXT)";
     public static final String CREAR_TABLA_SINCRONIZACION = "CREATE TABLE sincronizacion(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                                         "estado TEXT)";
-
-    public static final String CREAR_TABLA_TIPOVEHICULOS = "CREATE TABLE tipoVehiculos(id INTEGER PRIMARY KEY, " +
-                                                                                        "vehiculo TEXT)";
-
-    public static final String CREAR_TABLA_TIPOLICENCIA = "CREATE TABLE tipoLicencia(id INTEGER PRIMARY KEY, " +
-                                                                                        "descripcion TEXT)";
 
     public static final String CREAR_TABLA_VEHICULOS = "CREATE TABLE vehiculos(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                                     "ID_VEHICULO INTEGER, "+

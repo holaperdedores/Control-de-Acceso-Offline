@@ -135,7 +135,7 @@ public class Configuraciones extends AppCompatActivity {
         sHabilitarBtnEmergencia = findViewById(R.id.sHabilitarBtnEmergencia);
         sHabilitarBtnLicencias = findViewById(R.id.sHabilitarBtnLicencias);
 
-        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 1);
+        conn = new ConexionSQLiteHelper(this, "DB_CIO", null, 3);
 
         rq = Volley.newRequestQueue(getApplicationContext());
 

@@ -24,8 +24,6 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_LICENCIAS);
         db.execSQL(Utilidades.CREAR_TABLA_LICENCIAS_CAPTURADAS);
         db.execSQL(Utilidades.CREAR_TABLA_SINCRONIZACION);
-        db.execSQL(Utilidades.CREAR_TABLA_TIPOVEHICULOS);
-        db.execSQL(Utilidades.CREAR_TABLA_TIPOLICENCIA);
         db.execSQL(Utilidades.CREAR_TABLA_VEHICULOS);
         db.execSQL(Utilidades.CREAR_TABLA_VEHICULOS_CAPTURADAS);
         db.execSQL(Utilidades.CREAR_TABLA_PASAJEROS_CAPTURADOS);
@@ -45,10 +43,22 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS configuraciones");
         db.execSQL("DROP TABLE IF EXISTS personal");
         db.execSQL("DROP TABLE IF EXISTS personalCapturado");
+        db.execSQL("DROP TABLE IF EXISTS personalRechazado");
+        db.execSQL("DROP TABLE IF EXISTS vehiculos");
+        db.execSQL("DROP TABLE IF EXISTS vehiculosCapturadas");
+        db.execSQL("DROP TABLE IF EXISTS vehiculosRechazado");
+        db.execSQL("DROP TABLE IF EXISTS pasajerosCapturadas");
+        db.execSQL("DROP TABLE IF EXISTS paseVisitaRechazado");
+        db.execSQL("DROP TABLE IF EXISTS visitaTecnica");
+        db.execSQL("DROP TABLE IF EXISTS visitaTecnicaCap");
+        db.execSQL("DROP TABLE IF EXISTS visitaAdminis");
+        db.execSQL("DROP TABLE IF EXISTS visitaAdminisCap");
         db.execSQL("DROP TABLE IF EXISTS especiales");
         db.execSQL("DROP TABLE IF EXISTS especialesCapturados");
+        db.execSQL("DROP TABLE IF EXISTS especialesRechazado");
         db.execSQL("DROP TABLE IF EXISTS licencias");
         db.execSQL("DROP TABLE IF EXISTS licenciasCapturadas");
+        db.execSQL("DROP TABLE IF EXISTS licenciasRechazado");
         db.execSQL("DROP TABLE IF EXISTS sincronizacion");
         onCreate(db);
     }
