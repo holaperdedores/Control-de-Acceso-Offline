@@ -11,17 +11,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.cio.utilidades.DataConverter;
+import com.example.cio.utilidades.LogUtils;
 import com.example.cio.utilidades.Utilidades;
 
 import org.json.JSONArray;
@@ -34,6 +33,8 @@ import java.util.Map;
 import static com.example.cio.utilidades.Utilidades.ifN;
 
 public class Configuraciones extends AppCompatActivity {
+
+    final static String TAG ="MainActivity";
 
     TextView lblAppId;
     EditText txtWsConfiguraciones,
@@ -198,62 +199,19 @@ public class Configuraciones extends AppCompatActivity {
             txtWsTipoLicencia.setText(CFGwsTipoLicencia);
             txtWsVehiculos.setText(CFGwsVehiculos);
             txtTiempo.setText(CFGtiempo);
-            if(CFGhabilitar_camara.equals("1")){
-                sHabilitarCamara.setChecked(true);
-            }else{
-                sHabilitarCamara.setChecked(false);
-            }
-            if(CFGhabilitar_btnIngresos.equals("1")){
-                sHabilitarBtnIngresos.setChecked(true);
-            } else {
-                sHabilitarBtnIngresos.setChecked(false);
-            }
-            if(CFGhabilitar_btnSalidas.equals("1")){
-                sHabilitarBtnSalidas.setChecked(true);
-            } else {
-                sHabilitarBtnSalidas.setChecked(false);
-            }
-            if(CFGhabilitar_btnVehiculos.equals("1")){
-                sHabilitarBtnVehiculos.setChecked(true);
-            } else {
-                sHabilitarBtnVehiculos.setChecked(false);
-            }
-            if(CFGhabilitar_btnEspeciales.equals("1")){
-                sHabilitarBtnEspeciales.setChecked(true);
-            } else {
-                sHabilitarBtnEspeciales.setChecked(false);
-            }
-            if(CFGhabilitar_btnVisitas.equals("1")){
-                sHabilitarBtnVisitas.setChecked(true);
-            } else {
-                sHabilitarBtnVisitas.setChecked(false);
-            }
-            if(CFGhabilitar_btnTecnica.equals("1")){
-                sHabilitarBtnTecnica.setChecked(true);
-            } else {
-                sHabilitarBtnTecnica.setChecked(false);
-            }
-            if(CFGhabilitar_btnGrupal.equals("1")){
-                sHabilitarBtnGrupal.setChecked(true);
-            } else {
-                sHabilitarBtnGrupal.setChecked(false);
-            }
-            if(CFGhabilitar_btnTransportista.equals("1")){
-                sHabilitarBtnTransportista.setChecked(true);
-            } else {
-                sHabilitarBtnTransportista.setChecked(false);
-            }
-            if(CFGhabilitar_btnEmergencia.equals("1")){
-                sHabilitarBtnEmergencia.setChecked(true);
-            } else {
-                sHabilitarBtnEmergencia.setChecked(false);
-            }
-            if(CFGhabilitar_btnLicencias.equals("1")){
-                sHabilitarBtnLicencias.setChecked(true);
-            } else {
-                sHabilitarBtnLicencias.setChecked(false);
-            }
+            sHabilitarCamara.setChecked(CFGhabilitar_camara.equals("1"));
+            sHabilitarBtnIngresos.setChecked(CFGhabilitar_btnIngresos.equals("1"));
+            sHabilitarBtnSalidas.setChecked(CFGhabilitar_btnSalidas.equals("1"));
+            sHabilitarBtnVehiculos.setChecked(CFGhabilitar_btnVehiculos.equals("1"));
+            sHabilitarBtnEspeciales.setChecked(CFGhabilitar_btnEspeciales.equals("1"));
+            sHabilitarBtnVisitas.setChecked(CFGhabilitar_btnVisitas.equals("1"));
+            sHabilitarBtnTecnica.setChecked(CFGhabilitar_btnTecnica.equals("1"));
+            sHabilitarBtnGrupal.setChecked(CFGhabilitar_btnGrupal.equals("1"));
+            sHabilitarBtnTransportista.setChecked(CFGhabilitar_btnTransportista.equals("1"));
+            sHabilitarBtnEmergencia.setChecked(CFGhabilitar_btnEmergencia.equals("1"));
+            sHabilitarBtnLicencias.setChecked(CFGhabilitar_btnLicencias.equals("1"));
         }
+        cursor.close();
     }
 
     public void onclickCargarImagen(View view) {
@@ -263,7 +221,7 @@ public class Configuraciones extends AppCompatActivity {
     private void cargarImagenLogo() {
         try {
             String url = txtUrlLogo.getText().toString();
-            if(url.trim().equals("")){
+            if(url.trim().isEmpty()){
                 Toast.makeText(this, "La url ingresada no es válida", Toast.LENGTH_LONG).show();
             }else {
                 Glide.with(this)
@@ -374,19 +332,21 @@ public class Configuraciones extends AppCompatActivity {
 
     public void onclickCargarWebservice(View view) {
         try {
-            Map<String, String> parametros = new Hashtable<String, String>();
+            Map<String, String> parametros = new Hashtable<>();
             //parametros.put("accion", "descargar-ggss");
             StringRequest stringRequest = new StringRequest(Request.Method.GET, txtWsConfiguraciones.getText().toString(),
-                    response -> html2HashtableConfiguraciones(response),
+                    this::html2HashtableConfiguraciones,
                     error -> Toast.makeText(this, "Error al obtener configuraciones", Toast.LENGTH_SHORT).show()
             ) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     return parametros;
                 }
             };
             rq.add(stringRequest);
-        }catch (Exception e){ }
+        }catch (Exception e){
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
     }
 
     private void html2HashtableConfiguraciones(String texto){
@@ -423,10 +383,12 @@ public class Configuraciones extends AppCompatActivity {
                 if(ifN(jsonObject.getString("HABILITAR_BTNTRANSPORTISTA")).equals("1")) sHabilitarBtnTransportista.setChecked(true);
                 if(ifN(jsonObject.getString("HABILITAR_BTNEMERGENCIA")).equals("1")) sHabilitarBtnEmergencia.setChecked(true);
                 if(ifN(jsonObject.getString("HABILITAR_BTNLICENCIAS")).equals("1")) sHabilitarBtnLicencias.setChecked(true);
-            }catch (Exception e){ }
+            }catch (Exception e){
+                LogUtils.LOGE(TAG, e.getMessage());
+            }
             cargarImagenLogo();
         } catch (JSONException e) {
-            e.printStackTrace();
+            LogUtils.LOGE(TAG, e.getMessage());
         }
     }
 }

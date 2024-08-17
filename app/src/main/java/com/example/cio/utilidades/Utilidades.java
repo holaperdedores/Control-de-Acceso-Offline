@@ -4,6 +4,8 @@ import java.util.Calendar;
 
 public class Utilidades {
 
+    final static String TAG = "Utilidades";
+
     public static final String VRCHR = "'VRCHR'";
 
     public static final String CREAR_TABLA_CONFIGURACIONES = "CREATE TABLE configuraciones(id_configuracion INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -201,7 +203,7 @@ public class Utilidades {
             "FECHA_CAPTURA TEXT)";
 
     public static boolean fecha1MayorQueFecha2(String fecha1, String fecha2){
-        boolean resultado = false;
+        boolean resultado;
         String year1, month1, day1, year2, month2, day2, f1, f2;
         int n1, n2;
         //0123456789
@@ -223,7 +225,7 @@ public class Utilidades {
     public static String ifN(String dato){
         if(dato != null){
             if(!dato.isEmpty()) {
-                if (!dato.trim().equals("")) {
+                if (!dato.trim().isEmpty()) {
                     return dato;
                 }else{
                     return "";
@@ -238,7 +240,7 @@ public class Utilidades {
     public static String ifN(String dato, String isNull){
         if(dato != null){
             if(!dato.isEmpty()) {
-                if (!dato.trim().equals("")) {
+                if (!dato.trim().isEmpty()) {
                     return dato;
                 }else{
                     return isNull;
@@ -253,7 +255,7 @@ public class Utilidades {
     public static String ifN(String dato, String isNull, String notNull){
         if(dato != null){
             if(!dato.isEmpty()) {
-                if (!dato.trim().equals("")) {
+                if (!dato.trim().isEmpty()) {
                     return ((notNull.equals(VRCHR))?"'" + dato + "'":notNull);
                 }else{
                     return isNull;
@@ -276,7 +278,9 @@ public class Utilidades {
                     rellenarCeros(c.get(Calendar.MONTH) + 1) + "-" +
                     c.get(Calendar.YEAR);
 
-        }catch(Exception e) {}
+        }catch(Exception e) {
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return sDate;
     }
     public static String TIMESTAMP(){
@@ -290,7 +294,9 @@ public class Utilidades {
                     + " " + rellenarCeros(c.get(Calendar.HOUR_OF_DAY))
                     + ":" + rellenarCeros(c.get(Calendar.MINUTE))
                     + ":" + rellenarCeros(c.get(Calendar.SECOND));
-        }catch(Exception e) {}
+        }catch(Exception e) {
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return sDate;
     }
     public static String TIMESTAMPdate(){
@@ -301,7 +307,9 @@ public class Utilidades {
             sDate = c.get(Calendar.YEAR)
                     + "-" + rellenarCeros(c.get(Calendar.MONTH) + 1)
                     + "-" + rellenarCeros(c.get(Calendar.DAY_OF_MONTH));
-        }catch(Exception e) {}
+        }catch(Exception e) {
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return sDate;
     }
     public static String generarAppID(){
@@ -315,7 +323,9 @@ public class Utilidades {
                     + rellenarCeros(c.get(Calendar.HOUR_OF_DAY))
                     + rellenarCeros(c.get(Calendar.MINUTE))
                     + rellenarCeros(c.get(Calendar.SECOND));
-        }catch(Exception e) {}
+        }catch(Exception e) {
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return fecha;
     }
     private static String rellenarCeros(Integer dato){
@@ -323,20 +333,10 @@ public class Utilidades {
         try{
             String agregado = "0" + dato.toString();
             resultado = agregado.substring(agregado.length() - 2);
-        }catch (Exception e){}
+        }catch (Exception e){
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return resultado;
-    }
-    public static String TIMESTAMP2SPA(){
-        String resultado = TIMESTAMP();
-        //0000000000111111111
-        //0123456789012345678
-        //2020-12-31 13:54:00
-        return resultado.substring(8, 10) +
-                "/" +
-                resultado.substring(5, 7) +
-                "/" +
-                resultado.substring(0, 4) +
-                resultado.substring(10, 19);
     }
 
     public static String date2spa(String date){
@@ -346,7 +346,9 @@ public class Utilidades {
             //0000000000111111111
             //0123456789012345678
             //2020-12-31 13:54:00
-        }catch (Exception e){ }
+        }catch (Exception e){
+            LogUtils.LOGE(TAG, e.getMessage());
+        }
         return resultado;
     }
 }

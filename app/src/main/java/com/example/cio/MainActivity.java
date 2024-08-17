@@ -111,11 +111,8 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue rq = null;
 
     MediaPlayer mP = null;
+
     final  static String SYNC_DATA_WORK_NAME = "SINCRONIZAR_AUTOMATIC";
-    WorkRequest uploadWorkRequest =
-            new OneTimeWorkRequest.Builder(CargaAsincrona.class)
-                    .setInputData(createInputDataForClass())
-                    .build();
 
     String versiontxt = BuildConfig.VERSION_NAME;
 
@@ -151,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         btnEmergencia = findViewById(R.id.btnEmergencia);
         btnLicencias = findViewById(R.id.btnLicencias);
         btnPanelCentral = findViewById(R.id.btnPanelCentral);
-        btnSincronizar = findViewById(R.id.btnSincronizar);
+        btnSincronizar = findViewById(R.id.btnSincronizarMain);
         lblActualizarInformacion = findViewById(R.id.lblActualizarInformacion);
 
         btnVisitas.setVisibility(View.INVISIBLE);
@@ -312,9 +309,9 @@ public class MainActivity extends AppCompatActivity {
                             CargaAsincrona.class,
                             Long.parseLong(CFGtiempo),
                             TimeUnit.MILLISECONDS)
+                            .addTag("SINCRONIZARBD")
                             .setInputData(createInputDataForClass())
                             .build();
-            WorkManager.getInstance(getApplicationContext()).cancelAllWork();
             WorkManager
                     .getInstance(getApplicationContext())
                     .enqueueUniquePeriodicWork(
@@ -346,7 +343,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onclickSincronizar(View view) {
+    public void onclickSincronizarMain(View view) {
+        OneTimeWorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(CargaAsincrona.class)
+                        .setInputData(createInputDataForClass())
+                        .build();
+        WorkManager.getInstance(getApplicationContext()).cancelAllWorkByTag("SINCRONIZARBD");
         WorkManager
                 .getInstance(getApplicationContext())
                 .enqueue(uploadWorkRequest);
@@ -356,16 +358,11 @@ public class MainActivity extends AppCompatActivity {
     public void onclickBtnIngresos(View view) {
         tipoPase="ingresos"+tipoPase;
         if(esVehiculo){
-            LogUtils.LOGI(TAG,"la variable vehiculo es "+esVehiculo);
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             mP = MediaPlayer.create(getApplicationContext(), R.raw.ingresovehicular);
             mP.start();
             esVehiculo = false;
@@ -382,15 +379,11 @@ public class MainActivity extends AppCompatActivity {
             tipoPase = "";
             startActivity(intent);
         }else{
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             mP = MediaPlayer.create(getApplicationContext(), R.raw.registrandoacceso);
             mP.start();
             Intent intent = new Intent(MainActivity.this, Control.class);
@@ -403,15 +396,11 @@ public class MainActivity extends AppCompatActivity {
     public void onclickBtnSalidas(View view) {
         tipoPase="salidas"+tipoPase;
         if(esVehiculo){
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             mP = MediaPlayer.create(getApplicationContext(), R.raw.salidavehicular);
             mP.start();
             esVehiculo = false;
@@ -426,15 +415,11 @@ public class MainActivity extends AppCompatActivity {
             tipoPase = "";
             startActivity(intent);
         }else{
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             mP = MediaPlayer.create(getApplicationContext(), R.raw.registrandosalida);
             mP.start();
             Intent intent = new Intent(MainActivity.this, Control.class);
@@ -543,15 +528,11 @@ public class MainActivity extends AppCompatActivity {
         btnEmergencia.setVisibility(View.INVISIBLE);
     }
     public void onclickBtnEmergencia(View view) {
-        try {
+        if(mP!=null){
             mP.stop();
-        }catch (Exception e){ }
-        try {
             mP.release();
-        }catch (Exception e){ }
-        try {
             mP = null;
-        }catch (Exception e){ }
+        }
         mP = MediaPlayer.create(getApplicationContext(), R.raw.registrandoemergencia);
         mP.start();
         Intent intent = new Intent(MainActivity.this, Control.class);
@@ -559,15 +540,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void onclickBtnLicencias(View view) {
-        try {
+        if(mP!=null){
             mP.stop();
-        }catch (Exception e){ }
-        try {
             mP.release();
-        }catch (Exception e){ }
-        try {
             mP = null;
-        }catch (Exception e){ }
+        }
         mP = MediaPlayer.create(getApplicationContext(), R.raw.registrandolicencia);
         mP.start();
         Intent intent = new Intent(MainActivity.this, Control.class);

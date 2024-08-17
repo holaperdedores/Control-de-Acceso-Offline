@@ -314,6 +314,7 @@ public class Control extends AppCompatActivity {
                 dialogo.setVisibility(View.INVISIBLE);
             }
         });
+        cursor.close();
     }
     @Override protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == 0){
@@ -394,6 +395,7 @@ public class Control extends AppCompatActivity {
                 btnCamara.setVisibility(View.GONE);
                 btnActualiza.setVisibility(View.GONE);
                 btnTeclado.setVisibility(View.GONE);
+                fechaCarga.setVisibility(View.GONE);
                 imgVehiculo.setVisibility(View.VISIBLE);
                 imgConductor.setVisibility(View.VISIBLE);
                 imgPasajeros.setVisibility(View.VISIBLE);
@@ -934,15 +936,11 @@ public class Control extends AppCompatActivity {
     /*PROCESO VEHICULO*/
     private void procesarPatente(String patente) {
         try {
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             ocultarTecladoVirtual();
             SQLiteDatabase db = conn.getReadableDatabase();
             String[] campos,
@@ -978,6 +976,7 @@ public class Control extends AppCompatActivity {
                 resultadoVehiculo.setTextColor(getResources().getColor(R.color.green_success));
                 button.setText("AUTORIZADO");
                 button.setBackground(getDrawable(R.drawable.afirmativo));
+                cursor2.close();
             } else {
                 resultadoPatente.setText(patente.toUpperCase());
                 resultadoVehiculo.setText("DENEGADO");
@@ -1010,15 +1009,11 @@ public class Control extends AppCompatActivity {
     private void procesarChofer(String rut) {
         ocultarTecladoVirtual();
         try {
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             SQLiteDatabase db = conn.getReadableDatabase();
             String[] campos,
                     parametros;
@@ -1039,7 +1034,7 @@ public class Control extends AppCompatActivity {
                 cursor.moveToFirst();
                 if (!fecha1MayorQueFecha2(TIMESTAMPdate(), cursor.getString(3)) || cursor.getString(3).equals("0000-00-00")) { //si fecha_vencimiento licencia no ha pasado
                     //si fecha restriccion licencia ya paso o simplemente no tiene restriccion
-                    if (ifN(cursor.getString(4)).equals("") || ifN(cursor.getString(4)).equals("0000-00-00") || (!fecha1MayorQueFecha2(cursor.getString(4), TIMESTAMPdate()) && !cursor.getString(4).equals(TIMESTAMPdate()))) {
+                    if (ifN(cursor.getString(4)).isEmpty() || ifN(cursor.getString(4)).equals("0000-00-00") || (!fecha1MayorQueFecha2(cursor.getString(4), TIMESTAMPdate()) && !cursor.getString(4).equals(TIMESTAMPdate()))) {
                         campos = new String[]{"NOMBRE", "APELLIDO", "CARGO", "EMPRESA","id","ESTADO"};
                         parametros = new String[]{rut.toLowerCase()};
                         cursor2 = db.query("personal", campos, "LOWER(RUT) = ?", parametros, null, null, null);
@@ -1065,6 +1060,7 @@ public class Control extends AppCompatActivity {
                             resultadoCho.setVisibility(View.VISIBLE);
                             dialogoV.setVisibility(View.GONE);
                             registrarCapturaPasajeros(idGrupal,ifN(rut, null), idPer, isNumeric(personal.getString(2)) ? motivoRechazo(Integer.parseInt(personal.getString(2))) : personal.getString(2), "1", tipo_c, ifN(TIMESTAMP(), null));
+                            personal.close();
                         }else{
                             rechazoChofer(ifN(rut, null),tipo_c,"No se encuentra en Sistema");
                         }
@@ -1099,7 +1095,7 @@ public class Control extends AppCompatActivity {
         resultadoCho.setVisibility(View.VISIBLE);
         dialogoV.setVisibility(View.GONE);
         registrarCapturaPasajeros(idGrupal,rut,rut,motivo, "1", tipo, ifN(TIMESTAMP(), null));
-        if (tipo == "1") {
+        if (Objects.equals(tipo, "1")) {
             mP = MediaPlayer.create(getApplicationContext(), R.raw.licenciarechazo);
         }else{
             mP = MediaPlayer.create(getApplicationContext(), R.raw.registrandosalida);
@@ -1108,15 +1104,11 @@ public class Control extends AppCompatActivity {
     }
     private void procesarPasajero(String rut) {
         try {
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             ocultarTecladoVirtual();
             txtEscanear.setText("");
 
@@ -1179,6 +1171,7 @@ public class Control extends AppCompatActivity {
                     }
                     registrarCapturaPasajeros(idGrupal,ifN(rut, null),cursor.getString(4),isNumeric(cursor.getString(5)) ? motivoRechazo(Integer.parseInt(cursor.getString(5))) : cursor.getString(5), "2", "1", ifN(TIMESTAMP(), null));
                 }
+                cursor2.close();
             } else {
                 button.setText("DENEGADO");
                 button.setBackground(getDrawable(R.drawable.negativo));
@@ -1225,6 +1218,7 @@ public class Control extends AppCompatActivity {
             for (; rutAux != 0; rutAux /= 10) s = (s + rutAux % 10 * (9 - m++ % 6)) % 11;
             if (dv == (char) (s != 0 ? s + 47 : 75)) resultado = true;
         } catch (Exception e) {
+            LogUtils.LOGE(TAG, e.getMessage());
         }
         return resultado;
     }
@@ -1232,7 +1226,12 @@ public class Control extends AppCompatActivity {
         String soloRut = rut;
 
         //filtrar qr cédula de identidad nueva chilena
-        if (rut.toLowerCase().indexOf("https://portal.sidiv") == 0) soloRut = rut.substring(52, 62);
+        if (rut.toLowerCase().indexOf("https://portal.sidiv") == 0){
+            soloRut = rut.substring(52, 62);
+            if (soloRut.contains("&")){
+                soloRut = soloRut.substring(0,9);
+            }
+        }
         //5555555566666666667
         //2345678901234567890
         //18540458-7
@@ -1244,15 +1243,11 @@ public class Control extends AppCompatActivity {
     }
     private void procesarRut(String rut) {
         try {
-            try {
+            if(mP!=null){
                 mP.stop();
-            }catch (Exception e){ }
-            try {
                 mP.release();
-            }catch (Exception e){ }
-            try {
                 mP = null;
-            }catch (Exception e){ }
+            }
             ocultarTecladoVirtual();
             txtEscanear.setText("");
 
@@ -1326,6 +1321,7 @@ public class Control extends AppCompatActivity {
                         registrarRechazoVisita(0,2,"2","Pase sin vigencia",ifN(CFGid_app, null),ifN(TIMESTAMP(), null));
                         mP = MediaPlayer.create(getApplicationContext(), R.raw.accesodenegado);
                     }
+                    cursor2.close();
                     mP.start();
                     break;
                 case "salidastecnica":
@@ -1349,6 +1345,7 @@ public class Control extends AppCompatActivity {
                         registrarRechazoVisita(0,1,"2","Pase sin vigencia",ifN(CFGid_app, null),ifN(TIMESTAMP(), null));
                         mP = MediaPlayer.create(getApplicationContext(), R.raw.accesodenegado);
                     }
+                    cursor2.close();
                     mP.start();
                     break;
                 case "ingresos":
@@ -1377,6 +1374,7 @@ public class Control extends AppCompatActivity {
                             registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("1", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null),ifN(cursor.getString(5), null));
                             mP = MediaPlayer.create(getApplicationContext(), R.raw.accesopermitido);
                         }
+                        cursor2.close();
                     } else {
                         lblResultado.setText("DENEGADO");
                         lblResultado.setTextColor(getResources().getColor(R.color.red_danger));
@@ -1421,6 +1419,7 @@ public class Control extends AppCompatActivity {
                             registrarCapturaPersonal(rut, ifN(cursor.getString(4), null), ifN(cursor.getString(0), null), ifN(cursor.getString(1), null), ifN(cursor.getString(2), null), ifN(cursor.getString(3), null), ifN("2", null), ifN(CFGid_app, null), ifN(TIMESTAMP(), null), cursor.getString(5));
                             mP = MediaPlayer.create(getApplicationContext(), R.raw.seharegistradosalida);
                         }
+                        cursor2.close();
                     } else {
                         lblResultado.setText("DENEGADO");
                         lblResultado.setTextColor(getResources().getColor(R.color.red_danger));
@@ -1692,26 +1691,27 @@ public class Control extends AppCompatActivity {
                                             cargo = personal.getString(0);
                                         }
                                     }
+                                    personal.close();
                                 }
                                 if(cursor.getString(7) != null) {
-                                    if (!cursor.getString(7).equals("")) {
+                                    if (!cursor.getString(7).isEmpty()) {
                                         cargo += ((cargo.isEmpty()) ? "" : "\n") + "Faenas Autorizadas: " + cursor.getString(7);
                                     }
                                 }
                                 if(cursor.getString(2) != null) {
-                                    if (!cursor.getString(2).equals("")) {
+                                    if (!cursor.getString(2).isEmpty()) {
                                         String[] licencias = cursor.getString(2).split(",");
-                                        String tiposLicencias = "";
+                                        StringBuilder tiposLicencias = new StringBuilder();
                                         for (int i = 0; i < licencias.length; i++) {
                                             String traduccion = "";
                                             traduccion = formatoLicencia(licencias[i].trim().toLowerCase());
-                                            tiposLicencias += ((tiposLicencias.isEmpty()) ? "" : ", ") + traduccion;
+                                            tiposLicencias.append((tiposLicencias.length() == 0) ? "" : ", ").append(traduccion);
                                         }
                                         cargo += ((cargo.isEmpty()) ? "" : "\n") + "Licencias Autorizadas: " + tiposLicencias;
                                     }
                                 }
                                 if(cursor.getString(6) != null) {
-                                    if (!cursor.getString(6).equals("")) {
+                                    if (!cursor.getString(6).isEmpty()) {
                                         cargo += ((cargo.isEmpty()) ? "" : "\n") + "Observación: " + cursor.getString(6);
                                     }
                                 }
@@ -1754,12 +1754,12 @@ public class Control extends AppCompatActivity {
                         mP = MediaPlayer.create(getApplicationContext(), R.raw.accesodenegado);
                     }
                     mP.start();
+                    cursor.close();
                     break;
             }
             db.close();
-            cursor.close();
         }catch (Exception e){
-            e.printStackTrace();
+            LogUtils.LOGE(TAG, e.getMessage());
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -1961,7 +1961,7 @@ public class Control extends AppCompatActivity {
     }
     public static boolean isNumeric(String s)
     {
-        if (s == null || s.equals("")) {
+        if (s == null || s.isEmpty()) {
             return false;
         }
         return s.chars().allMatch(Character::isDigit);

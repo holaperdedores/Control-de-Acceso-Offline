@@ -11,13 +11,13 @@ import com.example.cio.utilidades.CargarDescarga;
 
 public class CargaAsincrona extends Worker {
 
-    int clase = 1;
     public CargaAsincrona(
             @NonNull Context context,
             @NonNull WorkerParameters params) {
         super(context, params);
     }
 
+    @NonNull
     @Override
     public Result doWork() {
         Context applicationContext = getApplicationContext();
