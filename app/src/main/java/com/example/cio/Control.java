@@ -322,6 +322,7 @@ public class Control extends AppCompatActivity {
                 if(data != null){
                     Barcode barcode = data.getParcelableExtra("barcode");
                     String rutLimpio = filtrarRut(barcode.displayValue);
+                    System.out.println(barcode.displayValue);
                     if(tipoControl.equals("ingresosVehicular")||tipoControl.equals("salidasVehicular")){
                         if(validarRut(rutLimpio)){
                             if(tipoVehiculo.equals("conductor")){

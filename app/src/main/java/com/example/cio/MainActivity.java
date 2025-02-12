@@ -1,5 +1,6 @@
 package com.example.cio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -8,7 +9,6 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkRequest;
 
 import android.Manifest;
 import android.content.Intent;
@@ -320,15 +320,11 @@ public class MainActivity extends AppCompatActivity {
                             periodicSyncDataWork
                     );
         }
-        buttonDialogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogo.setVisibility(View.INVISIBLE);
-            }
-        });
+        buttonDialogo.setOnClickListener(view -> dialogo.setVisibility(View.INVISIBLE));
 
     }
-    @Override public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == 200) if(!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) Toast.makeText(getApplicationContext(), "Falta permiso cámara", Toast.LENGTH_SHORT).show();
     }
     @Override protected void onResume() {
