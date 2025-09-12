@@ -57,7 +57,7 @@ public class Control extends AppCompatActivity {
     final static String TAG = "ControlActivity";
 
     public static ConstraintLayout dialogo;
-    public  static TextView tituloDialogo;
+    public static TextView tituloDialogo;
     public static TextView textoDialogo;
 
     public static ProgressBar progressDialogo;
@@ -75,7 +75,7 @@ public class Control extends AppCompatActivity {
     TextView lblCargo;
     TextView textoAyuda;
     EditText txtEscanear;
-    Button btnCamara,btnActualiza,btnTeclado,btnCerrar,btnPanel,btnTeclado2,btnCamara2;
+    Button btnCamara,btnTeclado,btnCerrar,btnPanel,btnTeclado2,btnCamara2;
     TableLayout tablaTeclado;
     Button button;
     ConstraintLayout dialogoV, resultadoVehi, resultadoCho,constraintTable, constraintVehiculo, constraintImageVehiculo;
@@ -114,7 +114,6 @@ public class Control extends AppCompatActivity {
             CFGwsVehiculos,
             CFGhabilitar_camara;
 
-    private static Bitmap bmpLogo = null;
     RequestQueue rq = null;
 
     MediaPlayer mP = null;
@@ -154,7 +153,6 @@ public class Control extends AppCompatActivity {
         lblTitulo = findViewById(R.id.lblTitulo);
         txtEscanear = findViewById(R.id.txtEscanear);
         btnCamara = findViewById(R.id.btnCamara);
-        btnActualiza = findViewById(R.id.btnSincronizar);
         btnTeclado = findViewById(R.id.btnTeclado);
         btnTeclado2 = findViewById(R.id.btnTeclado2);
         btnCamara2 = findViewById(R.id.btnCamara2);
@@ -248,7 +246,7 @@ public class Control extends AppCompatActivity {
             CFGhabilitar_camara = cursor.getString(13);
 
             if (CFGimage_logo != null) {
-                bmpLogo = DataConverter.convertByteArray2Image(CFGimage_logo);
+                Bitmap bmpLogo = DataConverter.convertByteArray2Image(CFGimage_logo);
                 imgLogo.setImageBitmap(bmpLogo);
             }
             if(CFGhabilitar_camara.equals("1")){
@@ -265,35 +263,26 @@ public class Control extends AppCompatActivity {
                 }
             }
         }
-        imgVehiculo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tipoVehiculo = "vehiculo";
-                btnPanel.setVisibility(View.GONE);
-                btnCerrar.setVisibility(View.GONE);
+        imgVehiculo.setOnClickListener(v -> {
+            tipoVehiculo = "vehiculo";
+            btnPanel.setVisibility(View.GONE);
+            btnCerrar.setVisibility(View.GONE);
+            formulario();
+        });
+        imgConductor.setOnClickListener(v -> {
+            if(idGrupal!=null){
+                tipoVehiculo = "conductor";
                 formulario();
+            }else{
+                Toast.makeText(Control.this,"Debe ingresar el vehiculo primero",Toast.LENGTH_LONG).show();
             }
         });
-        imgConductor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(idGrupal!=null){
-                    tipoVehiculo = "conductor";
-                    formulario();
-                }else{
-                    Toast.makeText(Control.this,"Debe ingresar el vehiculo primero",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        imgPasajeros.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(idGrupal!=null){
-                    tipoVehiculo = "pasajeros";
-                    formulario();
-                }else{
-                    Toast.makeText(Control.this,"Debe ingresar el vehiculo primero",Toast.LENGTH_LONG).show();
-                }
+        imgPasajeros.setOnClickListener(v -> {
+            if(idGrupal!=null){
+                tipoVehiculo = "pasajeros";
+                formulario();
+            }else{
+                Toast.makeText(Control.this,"Debe ingresar el vehiculo primero",Toast.LENGTH_LONG).show();
             }
         });
         txtEscanear.requestFocus();
@@ -308,12 +297,7 @@ public class Control extends AppCompatActivity {
         };
         Timer timer = new Timer();
         timer.schedule(task,250);
-        buttonDialogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogo.setVisibility(View.INVISIBLE);
-            }
-        });
+        buttonDialogo.setOnClickListener(view -> dialogo.setVisibility(View.INVISIBLE));
         cursor.close();
     }
     @Override protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -322,7 +306,6 @@ public class Control extends AppCompatActivity {
                 if(data != null){
                     Barcode barcode = data.getParcelableExtra("barcode");
                     String rutLimpio = filtrarRut(barcode.displayValue);
-                    System.out.println(barcode.displayValue);
                     if(tipoControl.equals("ingresosVehicular")||tipoControl.equals("salidasVehicular")){
                         if(validarRut(rutLimpio)){
                             if(tipoVehiculo.equals("conductor")){
@@ -380,7 +363,6 @@ public class Control extends AppCompatActivity {
                 txtEscanear.setVisibility(View.GONE);
                 textoAyuda.setVisibility(View.GONE);
                 btnCamara.setVisibility(View.GONE);
-                btnActualiza.setVisibility(View.GONE);
                 btnTeclado.setVisibility(View.GONE);
                 imgVehiculo.setVisibility(View.VISIBLE);
                 imgConductor.setVisibility(View.VISIBLE);
@@ -394,7 +376,6 @@ public class Control extends AppCompatActivity {
                 txtEscanear.setVisibility(View.GONE);
                 textoAyuda.setVisibility(View.GONE);
                 btnCamara.setVisibility(View.GONE);
-                btnActualiza.setVisibility(View.GONE);
                 btnTeclado.setVisibility(View.GONE);
                 fechaCarga.setVisibility(View.GONE);
                 imgVehiculo.setVisibility(View.VISIBLE);
@@ -410,9 +391,8 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.azulControlandoIngresos));
+                lblTitulo.setTextColor(ContextCompat.getColor(this, R.color.azulControlandoIngresos));
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
                 imgPasajeros.setVisibility(View.GONE);
@@ -425,9 +405,8 @@ public class Control extends AppCompatActivity {
                 txtEscanear.setHint(R.string.texto_escaner_persona);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoSalida));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoSalida));
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
                 imgPasajeros.setVisibility(View.GONE);
@@ -441,7 +420,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -449,7 +427,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.azulControlandoIngresos));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.azulControlandoIngresos));
                 break;
             case "salidasvisitas":
                 lblTitulo.setText(R.string.control_salida_visitas);
@@ -457,7 +435,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -465,7 +442,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoVisitas));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoVisitas));
                 break;
             case "ingresostecnica":
                 lblTitulo.setText(R.string.control_tecnica_ent);
@@ -473,7 +450,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -481,7 +457,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.azulControlandoIngresos));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.azulControlandoIngresos));
                 break;
             case "salidastecnica":
                 lblTitulo.setText(R.string.control_tecnica_sal);
@@ -489,7 +465,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -497,14 +472,13 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoVisitas));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoVisitas));
                 break;
             case "ingresosgrupal":
                 lblTitulo.setText(R.string.control_grupal_ent);
                 txtEscanear.setHint(R.string.texto_escaner_persona);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -512,14 +486,13 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.azulControlandoIngresos));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.azulControlandoIngresos));
                 break;
             case "ingresostransportista":
                 lblTitulo.setText(R.string.control_fletes_ent);
                 txtEscanear.setHint(R.string.texto_escaner_persona);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -527,14 +500,13 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.azulControlandoIngresos));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.azulControlandoIngresos));
                 break;
             case "salidasgrupal":
                 lblTitulo.setText(R.string.control_grupal_sal);
                 txtEscanear.setHint(R.string.texto_escaner_persona);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -542,14 +514,13 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoSalida));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoSalida));
                 break;
             case "salidastransportista":
                 lblTitulo.setText(R.string.control_fletes_sal);
                 txtEscanear.setHint(R.string.texto_escaner_persona);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -557,7 +528,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoSalida));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoSalida));
                 break;
             case "emergencia":
                 lblTitulo.setText(R.string.control_emergencia);
@@ -565,7 +536,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -573,7 +543,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoVisitas));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoVisitas));
                 break;
             case "licencias":
                 lblTitulo.setText(R.string.control_licencia);
@@ -581,7 +551,6 @@ public class Control extends AppCompatActivity {
                 textoAyuda.setVisibility(View.VISIBLE);
                 textoAyuda.setVisibility(View.VISIBLE);
                 btnCamara.setVisibility(View.VISIBLE);
-                btnActualiza.setVisibility(View.VISIBLE);
                 btnTeclado.setVisibility(View.VISIBLE);
                 imgVehiculo.setVisibility(View.GONE);
                 imgConductor.setVisibility(View.GONE);
@@ -589,7 +558,7 @@ public class Control extends AppCompatActivity {
                 txtVehiculo.setVisibility(View.GONE);
                 txtConductor.setVisibility(View.GONE);
                 txtPasajeros.setVisibility(View.GONE);
-                lblTitulo.setTextColor(getResources().getColor(R.color.rojoControlandoVisitas));
+                lblTitulo.setTextColor(ContextCompat.getColor(this,R.color.rojoControlandoVisitas));
                 break;
         }
     }
@@ -1225,17 +1194,18 @@ public class Control extends AppCompatActivity {
     }
     private String filtrarRut(String rut){
         String soloRut = rut;
-
         //filtrar qr cédula de identidad nueva chilena
         if (rut.toLowerCase().indexOf("https://portal.sidiv") == 0){
             soloRut = rut.substring(52, 62);
             if (soloRut.contains("&")){
                 soloRut = soloRut.substring(0,9);
             }
+        } else if (rut.toLowerCase().indexOf("https://portal.nuevosidiv") == 0) {
+            soloRut = rut.substring(65, 75);
+            if (soloRut.contains("&")){
+                soloRut = soloRut.substring(0,9);
+            }
         }
-        //5555555566666666667
-        //2345678901234567890
-        //18540458-7
         soloRut = soloRut.toUpperCase().trim();
         soloRut = soloRut.replace(".", "");
         soloRut = soloRut.replace("-", "");

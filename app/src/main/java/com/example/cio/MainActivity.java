@@ -11,6 +11,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -30,7 +31,10 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.cio.WorkManager.CargaAsincrona;
+import com.example.cio.WorkManager.UploadAsincrona;
+import com.example.cio.utilidades.Cargar;
 import com.example.cio.utilidades.DataConverter;
+import com.example.cio.utilidades.Descarga;
 import com.example.cio.utilidades.LogUtils;
 import com.example.cio.utilidades.Utilidades;
 
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         btnEmergencia = findViewById(R.id.btnEmergencia);
         btnLicencias = findViewById(R.id.btnLicencias);
         btnPanelCentral = findViewById(R.id.btnPanelCentral);
-        btnSincronizar = findViewById(R.id.btnSincronizarMain);
+        btnSincronizar = findViewById(R.id.btnSyncDownloadMain);
         lblActualizarInformacion = findViewById(R.id.lblActualizarInformacion);
 
         btnVisitas.setVisibility(View.INVISIBLE);
@@ -325,7 +329,9 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 200) if(!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) Toast.makeText(getApplicationContext(), "Falta permiso cámara", Toast.LENGTH_SHORT).show();
+        if(requestCode == 200)
+            if(!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                Toast.makeText(getApplicationContext(), "Falta permiso cámara", Toast.LENGTH_SHORT).show();
     }
     @Override protected void onResume() {
         lblFecha.setText(Utilidades.fechaHoy());
@@ -337,6 +343,20 @@ public class MainActivity extends AppCompatActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    public void onclickSyncDownloadMain(View view) {
+        Context applicationContext = getApplicationContext();
+        ConexionSQLiteHelper conn;
+        conn = new ConexionSQLiteHelper(getApplicationContext(), "DB_CIO", null, 3);
+        new Descarga(conn,applicationContext,1);
+    }
+
+    public void onclickSyncLoadMain(View view) {
+        Context applicationContext = getApplicationContext();
+        ConexionSQLiteHelper conn;
+        conn = new ConexionSQLiteHelper(getApplicationContext(), "DB_CIO", null, 3);
+        new Cargar(conn,applicationContext,1);
     }
 
     public void onclickSincronizarMain(View view) {

@@ -131,16 +131,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
     <!--Sincronizar--><Button
-        android:id="@+id/btnSincronizarMain"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_baseline_sync_24"
-        android:onClick="onclickSincronizarMain"
-        app:backgroundTint="@color/azulBotonIngresos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnIngresoEspeciales" />
+    android:id="@+id/btnSyncDownloadMain"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/outline_arrow_downward_alt_24"
+    android:onClick="onclickSyncDownloadMain"
+    app:backgroundTint="@color/rojoBotonSalidas"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/btnSyncLoadMain"
+    app:layout_constraintTop_toBottomOf="@+id/btnIngresoEspeciales" />
+    <!--Sincronizar--><Button
+    android:id="@+id/btnSyncLoadMain"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/upload_icon"
+    android:onClick="onclickSyncLoadMain"
+    app:backgroundTint="@color/green_success"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/btnSyncDownloadMain"
+    app:layout_constraintTop_toBottomOf="@+id/btnIngresoEspeciales" />
     <TextView
         android:id="@+id/lblActualizarInformacion"
         android:layout_width="wrap_content"
@@ -149,7 +161,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSincronizarMain" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSyncLoadMain" />
     <TextView
         android:id="@+id/lblInfoCarga"
         android:layout_width="wrap_content"
