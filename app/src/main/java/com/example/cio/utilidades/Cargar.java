@@ -6,6 +6,8 @@ import static com.example.cio.utilidades.Utilidades.ifN;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -166,7 +168,17 @@ public class Cargar {
         }
         sincronizacionUnlock();
 
-        sync();
+        if (isInternetAvailable(context)) {
+            sync();
+        }
+    }
+    public static boolean isInternetAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        }
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
     public void terminoTarea(int problem) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {

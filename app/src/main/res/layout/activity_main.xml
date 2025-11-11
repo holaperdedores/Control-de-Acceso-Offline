@@ -132,8 +132,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
     <!--Sincronizar--><Button
     android:id="@+id/btnSyncDownloadMain"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/outline_arrow_downward_alt_24"
     android:onClick="onclickSyncDownloadMain"
@@ -144,8 +144,8 @@
     app:layout_constraintTop_toBottomOf="@+id/btnIngresoEspeciales" />
     <!--Sincronizar--><Button
     android:id="@+id/btnSyncLoadMain"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/upload_icon"
     android:onClick="onclickSyncLoadMain"
@@ -154,14 +154,24 @@
     app:layout_constraintStart_toEndOf="@+id/btnSyncDownloadMain"
     app:layout_constraintTop_toBottomOf="@+id/btnIngresoEspeciales" />
     <TextView
-        android:id="@+id/lblActualizarInformacion"
+        android:id="@+id/lblBajarInformacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ACTUALIZAR INFORMACIÓN"
+        android:text="BAJAR INFORMACIÓN"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lblSubirInformacion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSyncLoadMain" />
+    <TextView
+        android:id="@+id/lblSubirInformacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SUBIR INFORMACIÓN"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblBajarInformacion"
+        app:layout_constraintTop_toBottomOf="@+id/btnSyncLoadMain" />
+
     <TextView
         android:id="@+id/lblInfoCarga"
         android:layout_width="wrap_content"
@@ -173,7 +183,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblActualizarInformacion" />
+        app:layout_constraintTop_toBottomOf="@+id/lblSubirInformacion" />
     <!--Ingresos--><Button
         android:id="@+id/btnIngresos"
         android:layout_width="match_parent"
@@ -366,6 +376,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/lblTextoExplica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="La aplicación realiza la actualización de forma automatica, pero tambien se puede forzar el proceso en caso de ser requerido."
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPanelCentral" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

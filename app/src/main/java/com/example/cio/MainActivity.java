@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnLicencias;
     Button btnPanelCentral;
     Button btnSincronizar;
-    TextView lblActualizarInformacion;
+    TextView lblBajarInformacion;
+    TextView lblSubirInformacion;
 
     CountDownTimer cdtLogo = null;
     boolean cdtCancel = false;
@@ -153,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
         btnLicencias = findViewById(R.id.btnLicencias);
         btnPanelCentral = findViewById(R.id.btnPanelCentral);
         btnSincronizar = findViewById(R.id.btnSyncDownloadMain);
-        lblActualizarInformacion = findViewById(R.id.lblActualizarInformacion);
+        lblBajarInformacion = findViewById(R.id.lblBajarInformacion);
+        lblSubirInformacion = findViewById(R.id.lblSubirInformacion);
 
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
@@ -384,10 +386,10 @@ public class MainActivity extends AppCompatActivity {
             esVehiculo = false;
             btnVehiculos.setVisibility(View.VISIBLE);
             btnEspeciales.setVisibility(View.VISIBLE);
-            lblActualizarInformacion.setVisibility(View.VISIBLE);
+            lblSubirInformacion.setVisibility(View.VISIBLE);
             btnSincronizar.setVisibility(View.VISIBLE);
             btnLicencias.setVisibility(View.VISIBLE);
-            lblActualizarInformacion.setVisibility(View.VISIBLE);
+            lblBajarInformacion.setVisibility(View.VISIBLE);
             btnPanelCentral.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(MainActivity.this, Control.class);
             intent.putExtra("destino",tipoPase);
@@ -422,10 +424,10 @@ public class MainActivity extends AppCompatActivity {
             esVehiculo = false;
             btnVehiculos.setVisibility(View.VISIBLE);
             btnEspeciales.setVisibility(View.VISIBLE);
-            lblActualizarInformacion.setVisibility(View.VISIBLE);
+            lblSubirInformacion.setVisibility(View.VISIBLE);
             btnSincronizar.setVisibility(View.VISIBLE);
             btnLicencias.setVisibility(View.VISIBLE);
-            lblActualizarInformacion.setVisibility(View.VISIBLE);
+            lblBajarInformacion.setVisibility(View.VISIBLE);
             Intent intent = new Intent(MainActivity.this, Control.class);
             intent.putExtra("destino",tipoPase);
             tipoPase = "";
@@ -451,7 +453,8 @@ public class MainActivity extends AppCompatActivity {
         btnVehiculos.setVisibility(View.INVISIBLE);
         btnEspeciales.setVisibility(View.INVISIBLE);
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnPanelCentral.setVisibility(View.VISIBLE);
     }
     public void onclickEspeciales(View view) {
@@ -488,7 +491,8 @@ public class MainActivity extends AppCompatActivity {
         btnVehiculos.setVisibility(View.INVISIBLE);
         btnLicencias.setVisibility(View.INVISIBLE);
         btnEspeciales.setVisibility(View.INVISIBLE);
-        lblActualizarInformacion.setVisibility(View.INVISIBLE);
+        lblSubirInformacion.setVisibility(View.INVISIBLE);
+        lblBajarInformacion.setVisibility(View.INVISIBLE);
         btnSincronizar.setVisibility(View.INVISIBLE);
     }
     public void onclickBtnVisitas(View view) {
@@ -496,8 +500,8 @@ public class MainActivity extends AppCompatActivity {
         btnIngresos.setVisibility(View.VISIBLE);
         btnSalidas.setVisibility(View.VISIBLE);
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
-
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
         btnGrupal.setVisibility(View.INVISIBLE);
@@ -509,8 +513,8 @@ public class MainActivity extends AppCompatActivity {
         btnIngresos.setVisibility(View.VISIBLE);
         btnSalidas.setVisibility(View.VISIBLE);
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
-
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
         btnGrupal.setVisibility(View.INVISIBLE);
@@ -522,8 +526,8 @@ public class MainActivity extends AppCompatActivity {
         btnIngresos.setVisibility(View.VISIBLE);
         btnSalidas.setVisibility(View.VISIBLE);
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
-
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
         btnGrupal.setVisibility(View.INVISIBLE);
@@ -535,8 +539,8 @@ public class MainActivity extends AppCompatActivity {
         btnIngresos.setVisibility(View.VISIBLE);
         btnSalidas.setVisibility(View.VISIBLE);
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
-
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
         btnGrupal.setVisibility(View.INVISIBLE);
@@ -597,8 +601,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         btnSincronizar.setVisibility(View.VISIBLE);
-        lblActualizarInformacion.setVisibility(View.VISIBLE);
-
+        lblSubirInformacion.setVisibility(View.VISIBLE);
+        lblBajarInformacion.setVisibility(View.VISIBLE);
         btnVisitas.setVisibility(View.INVISIBLE);
         btnTecnica.setVisibility(View.INVISIBLE);
         btnGrupal.setVisibility(View.INVISIBLE);

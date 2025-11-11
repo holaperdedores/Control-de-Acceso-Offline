@@ -8,7 +8,6 @@ import androidx.work.WorkerParameters;
 
 import com.example.cio.ConexionSQLiteHelper;
 import com.example.cio.utilidades.Cargar;
-import com.example.cio.utilidades.Descarga;
 
 public class UploadAsincrona extends Worker {
 
